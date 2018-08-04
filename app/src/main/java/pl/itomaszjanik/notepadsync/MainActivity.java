@@ -1,8 +1,8 @@
 package pl.itomaszjanik.notepadsync;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +16,7 @@ import java.util.Comparator;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteList;
+    public static final int QUERY_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

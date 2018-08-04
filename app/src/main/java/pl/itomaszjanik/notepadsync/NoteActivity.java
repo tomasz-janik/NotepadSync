@@ -1,9 +1,10 @@
 package pl.itomaszjanik.notepadsync;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -199,6 +200,15 @@ public class NoteActivity extends AppCompatActivity {
         if(!saved) {
             Toast.makeText(this, "Couldn't save the note", Toast.LENGTH_SHORT).show();
         }
+
+        Intent intent = new Intent(getBaseContext(), QueryFoldersWithTitleActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putString("content", content);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
 
         //returning to MainActivity
         finish();
