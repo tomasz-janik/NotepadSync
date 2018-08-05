@@ -17,6 +17,8 @@
             android:layout_height="match_parent"
             android:id="@+id/main_listview"
             android:dividerHeight="@dimen/list_view_bars"
+            android:paddingBottom="@dimen/list_view_bottom_padding"
+            android:clipToPadding="false"
     />
 
     <android.support.design.widget.FloatingActionButton

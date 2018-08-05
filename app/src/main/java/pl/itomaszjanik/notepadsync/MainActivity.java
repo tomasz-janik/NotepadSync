@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //adding empty note at the end so the fab(floating action button) won't "cloud" any note
-        notes.add(new Note(1,"","\n\n"));
-
         //if there are any notes
         if(notes != null && notes.size() > 0) {
             final NoteAdapter na = new NoteAdapter(this, R.layout.view_note_item, notes);
