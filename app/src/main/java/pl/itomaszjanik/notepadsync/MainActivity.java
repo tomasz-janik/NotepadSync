@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         //first, reset the listview
         noteList.setAdapter(null);
 
+        TextView noNotesView = findViewById(R.id.main_no_notes);
         ArrayList<Note> notes = Utilities.getAllSavedNotes(getApplicationContext());
 
         Collections.sort(notes, new Comparator<Note>() {
@@ -74,8 +76,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //if there are any notes
         if(notes != null && notes.size() > 0) {
+            noNotesView.setVisibility(View.GONE);
             final NoteAdapter na = new NoteAdapter(this, R.layout.view_note_item, notes);
             noteList.setAdapter(na);
 
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //if there are no notes
         else {
-            //Todo show "no notes :(" when there are none
+            noNotesView.setVisibility(View.VISIBLE);
         }
 
     }
