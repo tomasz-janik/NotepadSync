@@ -30,6 +30,8 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         if(note != null) {
             TextView title = convertView.findViewById(R.id.list_note_title);
             TextView content = convertView.findViewById(R.id.list_note_content_preview);
+            title.setVisibility(View.VISIBLE);
+            content.setVisibility(View.VISIBLE);
 
             //impossible to both be true
             if (note.getTitle().length() == 0){
