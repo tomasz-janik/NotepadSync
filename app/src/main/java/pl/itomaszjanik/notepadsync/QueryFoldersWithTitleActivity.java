@@ -114,8 +114,8 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
 
                     return getDriveResourceClient().createFile(parent, changeSet, contents);
                 })
-                .addOnFailureListener(this, e -> {
-                    Log.e(TAG, "Unable to create file", e);
-                });
+                .addOnFailureListener(this, e ->
+                    Log.e(TAG, "Unable to create file", e)
+                );
     }
 }

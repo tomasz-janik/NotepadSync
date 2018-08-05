@@ -14,7 +14,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
     public static final int WRAP_CONTENT_LENGTH = 115;
     public static final int WRAP_TITLE_LENGTH = 30;
 
-    public NoteAdapter(Context context, int resource, List<Note> objects) {
+    NoteAdapter(Context context, int resource, List<Note> objects) {
         super(context, resource, objects);
     }
 

@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         noteList = findViewById(R.id.main_listview);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener((View view) ->{
-            createNote();
-        });
+        fab.setOnClickListener((View view) ->
+                createNote()
+        );
     }
 
     @Override
@@ -85,20 +85,18 @@ public class MainActivity extends AppCompatActivity {
 
             //set click listener for every note
             //todo when holding note give option to remove
-            noteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String fileName = ((Note) noteList.getItemAtPosition(position)).getDate() + Utilities.FILE_EXTENSION;
-                    Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
+            noteList.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) ->{
+                String fileName = ((Note) noteList.getItemAtPosition(position)).getDate() + Utilities.FILE_EXTENSION;
+                Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Utilities.EXTRAS_NOTE_FILENAME, fileName);
-                    bundle.putString(Utilities.EXTRAS_NOTE_MODE, Utilities.EXTRAS_NOTE_UPDATE);
+                Bundle bundle = new Bundle();
+                bundle.putString(Utilities.EXTRAS_NOTE_FILENAME, fileName);
+                bundle.putString(Utilities.EXTRAS_NOTE_MODE, Utilities.EXTRAS_NOTE_UPDATE);
 
-                    viewNoteIntent.putExtras(bundle);
+                viewNoteIntent.putExtras(bundle);
 
-                    startActivity(viewNoteIntent);
-                }
+                startActivity(viewNoteIntent);
+
             });
         }
         //if there are no notes

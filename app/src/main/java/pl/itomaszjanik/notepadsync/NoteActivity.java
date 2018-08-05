@@ -102,19 +102,16 @@ public class NoteActivity extends AppCompatActivity {
         AlertDialog.Builder dialogDelete = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.note_delete_title))
                 .setMessage(getString(R.string.note_delete_info))
-                .setPositiveButton(getString(R.string.note_delete_yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        boolean deleted = Utilities.deleteFile(getApplicationContext(), fileName);
+                .setPositiveButton(getString(R.string.note_delete_yes), (DialogInterface dialog, int which) ->{
+                    boolean deleted = Utilities.deleteFile(getApplicationContext(), fileName);
 
-                        //if it wasn't possible to delete any note, tell user
-                        if(note == null || !deleted) {
-                            Toast.makeText(NoteActivity.this, getString(R.string.note_delete_error), Toast.LENGTH_SHORT).show();
-                        }
-
-                        //exit activity and go back to main
-                        finish();
+                    //if it wasn't possible to delete any note, tell user
+                    if(note == null || !deleted) {
+                        Toast.makeText(NoteActivity.this, getString(R.string.note_delete_error), Toast.LENGTH_SHORT).show();
                     }
+
+                    //exit activity and go back to main
+                    finish();
                 })
                 .setNegativeButton(getString(R.string.note_delete_no), null);
 
@@ -136,12 +133,9 @@ public class NoteActivity extends AppCompatActivity {
             AlertDialog.Builder dialogCancel = new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.note_discharge_title))
                     .setMessage(getString(R.string.note_delete_info))
-                    .setPositiveButton(getString(R.string.note_delete_yes), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //exit activity and go back to main
-                            finish();
-                        }
+                    .setPositiveButton(getString(R.string.note_delete_yes), (DialogInterface dialog, int which) -> {
+                        //exit activity and go back to main
+                        finish();
                     })
                     //todo add option to save note
                     .setNegativeButton(getString(R.string.note_delete_no), null);
@@ -171,13 +165,13 @@ public class NoteActivity extends AppCompatActivity {
      * @param content of the note
      * @return true if note is not empty, else false
      */
-    private boolean validateNote(String title, String content){
+    private boolean unvalidateNote(String title, String content){
         if (title.isEmpty() && content.isEmpty()){
             Toast.makeText(NoteActivity.this, "Can't save empty note :(", Toast.LENGTH_SHORT).show();
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     private void saveNote() {
@@ -187,7 +181,7 @@ public class NoteActivity extends AppCompatActivity {
         String content = noteContent.getText().toString();
 
         //checking if note is valid
-        if (!validateNote(title, content)) return;
+        if (unvalidateNote(title, content)) return;
 
         //setting note's creation time
         noteDate = System.currentTimeMillis();
@@ -222,7 +216,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
         //checking if note is valid
-        if (!validateNote(title, content)) return;
+        if (!unvalidateNote(title, content)) return;
 
         //updating note so the time of creation doesn't change
         noteDate = note.getDate();

@@ -1,14 +1,8 @@
 package pl.itomaszjanik.notepadsync;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Utilities {
@@ -172,13 +166,7 @@ public class Utilities {
     static ArrayList<Note> getAllSavedNotes(Context context) {
         ArrayList<Note> notes = new ArrayList<>();
         ArrayList<String> noteFiles = new ArrayList<>();
-        //Appdata appdata = getAppdata(context);
 
-        //int noOfNotes = appdata == null ? 0 : appdata.getNoOfNotes();
-
-/*        for (int i = noOfNotes - 1; i >= 0; i--){
-            noteFiles.add(Integer.toString(i) + FILE_EXTENSION);
-        }*/
         File filesDir = context.getFilesDir();
 
         for(String file : filesDir.list()) {
