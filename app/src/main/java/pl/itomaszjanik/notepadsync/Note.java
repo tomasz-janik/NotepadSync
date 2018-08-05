@@ -10,12 +10,10 @@ import java.util.TimeZone;
 public class Note implements Serializable {
 
     private long date; //creation time of the note
-    //private int id; //id of the note
     private String title; //title of the note
     private String content; //content of the note
 
     public Note(long dateInMillis, String title, String content) {
-        //this.id = id;
         this.date = dateInMillis;
         this.title = title;
         this.content = content;
@@ -32,10 +30,6 @@ public class Note implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-
-//    public void setId(int id){
-//        this.id = id;
-//    }
 
     public long getDate() {
         return date;
@@ -60,9 +54,5 @@ public class Note implements Serializable {
     public String getContent() {
         return content;
     }
-
-    //public int getId(){
-//        return id;
-//    }
 
 }

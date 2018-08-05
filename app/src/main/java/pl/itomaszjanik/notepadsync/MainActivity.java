@@ -2,6 +2,7 @@ package pl.itomaszjanik.notepadsync;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +17,6 @@ import java.util.Comparator;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteList;
-    public static final int QUERY_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         noteList = findViewById(R.id.main_listview);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener((View view) ->{
+            createNote();
+        });
     }
 
     @Override
@@ -38,14 +43,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             //creating new note
             case R.id.action_create:
-                Intent intent = new Intent(this, NoteActivity.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putString(Utilities.EXTRAS_NOTE_MODE, Utilities.EXTRAS_NOTE_NEW);
-
-                intent.putExtras(bundle);
-                startActivity(intent);
-
+                createNote();
                 break;
             case R.id.action_settings:
                 //TODO add settings
@@ -76,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //adding empty note at the end so the fab(floating action button) won't "cloud" any note
+        notes.add(new Note(1,"","\n\n"));
 
         //if there are any notes
         if(notes != null && notes.size() > 0) {
@@ -105,6 +105,16 @@ public class MainActivity extends AppCompatActivity {
             //Todo show "no notes :(" when there are none
         }
 
+    }
+
+    private void createNote(){
+        Intent intent = new Intent(this, NoteActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Utilities.EXTRAS_NOTE_MODE, Utilities.EXTRAS_NOTE_NEW);
+
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 }

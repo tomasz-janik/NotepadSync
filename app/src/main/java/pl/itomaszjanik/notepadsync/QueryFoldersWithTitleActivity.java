@@ -89,7 +89,6 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
                                 })
                         .addOnFailureListener(this, e -> {
                             Log.e(TAG, "Error retrieving files", e);
-                            showMessage(getString(R.string.query_failed));
 
                             setResult(Activity.RESULT_CANCELED, resultIntent);
                             finish();
@@ -117,7 +116,6 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
                 })
                 .addOnFailureListener(this, e -> {
                     Log.e(TAG, "Unable to create file", e);
-                    showMessage(getString(R.string.file_create_error));
                 });
     }
 }

@@ -65,7 +65,6 @@ public class CreateFolderActivity extends BaseDemoActivity {
                         })
                 .addOnFailureListener(this, e -> {
                     Log.e(TAG, "Unable to create file", e);
-                    showMessage(getString(R.string.file_create_error));
                     finish();
                 });
     }
@@ -91,7 +90,6 @@ public class CreateFolderActivity extends BaseDemoActivity {
                 })
                 .addOnFailureListener(this, e -> {
                     Log.e(TAG, "Unable to create file", e);
-                    showMessage(getString(R.string.file_create_error));
                 });
     }
 }
