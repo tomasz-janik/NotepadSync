@@ -110,6 +110,14 @@ public class NoteActivity extends AppCompatActivity {
                         Toast.makeText(NoteActivity.this, getString(R.string.note_delete_error), Toast.LENGTH_SHORT).show();
                     }
 
+                    Intent intent = new Intent(NoteActivity.this, DeleteFileActivity.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", noteTitle.getText().toString());
+                    intent.putExtras(bundle);
+
+                    startActivity(intent);
+
                     //exit activity and go back to main
                     finish();
                 })
@@ -165,9 +173,13 @@ public class NoteActivity extends AppCompatActivity {
      * @param content of the note
      * @return true if note is not empty, else false
      */
-    private boolean unvalidateNote(String title, String content){
+    private boolean invalidNote(String title, String content){
         if (title.isEmpty() && content.isEmpty()){
             Toast.makeText(NoteActivity.this, "Can't save empty note :(", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else if (title.isEmpty()){
+            Toast.makeText(NoteActivity.this, "Can't save empty title :(", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -181,7 +193,7 @@ public class NoteActivity extends AppCompatActivity {
         String content = noteContent.getText().toString();
 
         //checking if note is valid
-        if (unvalidateNote(title, content)) return;
+        if (invalidNote(title, content)) return;
 
         //setting note's creation time
         noteDate = System.currentTimeMillis();
@@ -194,15 +206,16 @@ public class NoteActivity extends AppCompatActivity {
         if(!saved) {
             Toast.makeText(this, "Couldn't save the note", Toast.LENGTH_SHORT).show();
         }
+        else{
+            Intent intent = new Intent(getBaseContext(), QueryFoldersWithTitleActivity.class);
 
-        Intent intent = new Intent(getBaseContext(), QueryFoldersWithTitleActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("title", title);
+            bundle.putString("content", content);
+            intent.putExtras(bundle);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("title", title);
-        bundle.putString("content", content);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
+            startActivity(intent);
+        }
 
         //returning to MainActivity
         finish();
@@ -216,7 +229,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
         //checking if note is valid
-        if (!unvalidateNote(title, content)) return;
+        if (!invalidNote(title, content)) return;
 
         //updating note so the time of creation doesn't change
         noteDate = note.getDate();

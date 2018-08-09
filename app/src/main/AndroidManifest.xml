@@ -27,6 +27,7 @@
         <activity android:name=".NoteActivity" />
         <activity android:name=".CreateFolderActivity"/>
         <activity android:name=".QueryFoldersWithTitleActivity"/>
+        <activity android:name=".DeleteFileActivity"/>
     </application>
 
 </manifest>

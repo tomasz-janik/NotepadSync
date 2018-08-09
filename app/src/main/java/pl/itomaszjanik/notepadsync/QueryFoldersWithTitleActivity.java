@@ -13,7 +13,6 @@
  */
 package pl.itomaszjanik.notepadsync;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,7 +54,6 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
     }
 
     private void listFiles() {
-        Intent resultIntent = new Intent();
 
         // [START query_title]
         Query query = new Query.Builder()
@@ -71,7 +69,6 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
                         .query(query)
                         .addOnSuccessListener(this,
                                 metadataBuffer -> {
-                                    setResult(Activity.RESULT_OK, resultIntent);
                                     try{
                                         metadataBuffer.get(0);
                                         createFileInFolder(metadataBuffer.get(0).getDriveId().asDriveFolder());
@@ -89,11 +86,8 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
                                 })
                         .addOnFailureListener(this, e -> {
                             Log.e(TAG, "Error retrieving files", e);
-
-                            setResult(Activity.RESULT_CANCELED, resultIntent);
                             finish();
                         });
-
     }
 
     private void createFileInFolder(final DriveFolder parent) {
