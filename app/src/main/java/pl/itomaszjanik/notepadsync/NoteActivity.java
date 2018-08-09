@@ -207,7 +207,7 @@ public class NoteActivity extends AppCompatActivity {
             Toast.makeText(this, "Couldn't save the note", Toast.LENGTH_SHORT).show();
         }
         else{
-            Intent intent = new Intent(getBaseContext(), QueryFoldersWithTitleActivity.class);
+            Intent intent = new Intent(getBaseContext(), CreateFileInFolderActivity.class);
 
             Bundle bundle = new Bundle();
             bundle.putString("title", title);

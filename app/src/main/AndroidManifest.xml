@@ -26,7 +26,7 @@
         </activity>
         <activity android:name=".NoteActivity" />
         <activity android:name=".CreateFolderActivity"/>
-        <activity android:name=".QueryFoldersWithTitleActivity"/>
+        <activity android:name=".CreateFileInFolderActivity"/>
         <activity android:name=".DeleteFileActivity"/>
     </application>
 

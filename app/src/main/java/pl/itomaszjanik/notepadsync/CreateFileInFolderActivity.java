@@ -33,8 +33,8 @@ import java.io.Writer;
  * An activity to illustrate how to query folders with title
  */
 
-public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
-    private static final String TAG = "QueryFoldersWithTitle";
+public class CreateFileInFolderActivity extends BaseDemoActivity {
+    private static final String TAG = "CreateFileInFolder";
     private static String title = "",content = "";
 
     @Override
@@ -50,13 +50,12 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
     @Override
     protected void onDriveClientReady() {
         getDriveClient().requestSync();
-        listFiles();
+        queryFolder();
     }
 
-    private void listFiles() {
-
+    private Query setQueryFolder(){
         // [START query_title]
-        Query query = new Query.Builder()
+        return new Query.Builder()
                 .addFilter(Filters.and(
                         Filters.eq(SearchableField.MIME_TYPE, "application/vnd.google-apps.folder"),
                         Filters.eq(SearchableField.TITLE, "NotepadSync"),
@@ -64,35 +63,36 @@ public class QueryFoldersWithTitleActivity extends BaseDemoActivity {
                 ))
                 .build();
         // [END query_title]
-        Task<MetadataBuffer> queryTask =
-                getDriveResourceClient()
-                        .query(query)
-                        .addOnSuccessListener(this,
-                                metadataBuffer -> {
-                                    try{
-                                        metadataBuffer.get(0);
-                                        createFileInFolder(metadataBuffer.get(0).getDriveId().asDriveFolder());
-                                    } catch (Exception e){
-                                        Intent intent = new Intent(this, CreateFolderActivity.class);
+    }
 
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("title", title);
-                                        bundle.putString("content", content);
-                                        intent.putExtras(bundle);
+    private void queryFolder() {
+        final Query query = setQueryFolder();
 
-                                        startActivity(intent);
-                                    }
-                                    finish();
-                                })
-                        .addOnFailureListener(this, e -> {
-                            Log.e(TAG, "Error retrieving files", e);
-                            finish();
-                        });
+        Task<MetadataBuffer> queryTask = getDriveResourceClient().query(query)
+                .addOnSuccessListener(this, metadataBuffer -> {
+                    if (metadataBuffer != null && metadataBuffer.getCount() > 0){
+                        createFileInFolder(metadataBuffer.get(0).getDriveId().asDriveFolder());
+                    }
+                    else{
+                        Intent intent = new Intent(this, CreateFolderActivity.class);
+                        Bundle bundle = new Bundle();
+
+                        bundle.putString("title", title);
+                        bundle.putString("content", content);
+                        intent.putExtras(bundle);
+
+                        startActivity(intent);
+                    }
+                    finish();
+                })
+                .addOnFailureListener(this, e -> {
+                    Log.e(TAG, "Error retrieving files", e);
+                    finish();
+                });
     }
 
     private void createFileInFolder(final DriveFolder parent) {
-        getDriveResourceClient()
-                .createContents()
+        getDriveResourceClient().createContents()
                 .continueWithTask(task -> {
                     DriveContents contents = task.getResult();
                     OutputStream outputStream = contents.getOutputStream();

@@ -71,8 +71,7 @@ public class CreateFolderActivity extends BaseDemoActivity {
     // [END create_folder]
 
     private void createFileInFolder(final DriveFolder parent) {
-        getDriveResourceClient()
-                .createContents()
+        getDriveResourceClient().createContents()
                 .continueWithTask(task -> {
                     DriveContents contents = task.getResult();
                     OutputStream outputStream = contents.getOutputStream();
