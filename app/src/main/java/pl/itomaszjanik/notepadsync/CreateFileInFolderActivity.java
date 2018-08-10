@@ -96,15 +96,16 @@ public class CreateFileInFolderActivity extends BaseDemoActivity {
                 .continueWithTask(task -> {
                     DriveContents contents = task.getResult();
                     OutputStream outputStream = contents.getOutputStream();
+
                     try (Writer writer = new OutputStreamWriter(outputStream)) {
                         writer.write(content);
                     }
 
                     MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                            .setTitle(title + ".txt")
-                            .setMimeType("text/plain")
-                            .setStarred(true)
-                            .build();
+                        .setTitle(title + ".txt")
+                        .setMimeType("text/plain")
+                        .setStarred(true)
+                        .build();
 
                     return getDriveResourceClient().createFile(parent, changeSet, contents);
                 })

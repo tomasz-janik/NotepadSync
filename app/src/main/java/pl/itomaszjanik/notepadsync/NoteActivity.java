@@ -229,7 +229,7 @@ public class NoteActivity extends AppCompatActivity {
 
 
         //checking if note is valid
-        if (!invalidNote(title, content)) return;
+        if (invalidNote(title, content)) return;
 
         //updating note so the time of creation doesn't change
         noteDate = note.getDate();
@@ -240,6 +240,17 @@ public class NoteActivity extends AppCompatActivity {
         //if it wasn't possible to save any note, tell user
         if(!saved) {
             Toast.makeText(this, "Couldn't save the note", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Intent intent = new Intent(getBaseContext(), UpdateNoteActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("old_title", note.getTitle());
+            bundle.putString("new_title", title);
+            bundle.putString("new_content", content);
+            intent.putExtras(bundle);
+
+            startActivity(intent);
         }
 
         //returning to MainActivity
